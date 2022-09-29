@@ -1,17 +1,18 @@
 from ast import excepthandler
+from distutils.errors import UnknownFileError
 import pyttsx3
 import PyPDF2
 import speech_recognition as sr
 
-listener = sr.Recognizer()
+#listener = sr.Recognizer()  
 engine =pyttsx3.init()
 voice=engine.getProperty("voices")
-engine.setProperty("voice",voice[0].id)
+engine.setProperty("voice",voice[0].id)    #voice 
 rate=engine.getProperty("rate")
 engine.setProperty("rate",160)
 
 
-def talk(text):
+def talk(text):               #customize pre-define function
     engine.say(text)
     engine.runAndWait()
 
@@ -29,21 +30,19 @@ def file_name():
 def read():
     talk("please enter the file name with extension:")
     file_name=input("enter the file name ")
-    book=open(file_name,'rb')
+    book=open(file_name,'rb')                 # readinfg file 
     pdfReader =PyPDF2.PdfReader(book)
-    pages = pdfReader.numPages
+    pages = pdfReader.numPages           #number of pages 
     print(pages)
     for num in range(0,pages):
         page=pdfReader.getPage(0)
         text= page.extractText()
         talk(text)
-while True:                  #condition is always true
+while True:        
     try:
-        talk("say the file name ")
         read()
-    except:
-        talk("please type the file name ")
-        read(open(input('entre the file name','rb')))
-"""except UnknownValueError :
-    talk("thank you sir")
-    print(" ")"""
+    
+        
+    except UnknownFileError :
+        talk("thank you sir")
+        print(" ")
