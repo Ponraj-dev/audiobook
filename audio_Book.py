@@ -37,7 +37,7 @@ def read():
         page=pdfReader.getPage(0)
         text= page.extractText()
         talk(text)
-while True:        
+while True:                  #condition is always true
     try:
         talk("say the file name ")
         read()
